@@ -1,0 +1,78 @@
+name: Arma 3 release mod
+description: Create and publish a new release of a mod ; allows multiple addons which must be previously built
+inputs:
+
+  name:
+    description: short name of the mod, used as file/directory identifier
+    required: true
+
+  product:
+    description: long description of the mod that goes in the mod.cpp
+    required: true
+
+  source:
+    description: path to the pbo files, relative to repository root, recursive
+    required: true
+
+  workshopId:
+    description: identifier of the Steam workshop item to update
+    required: true
+
+  url:
+    description: URL to author website, used in mod.cpp
+    required: false
+    default: https://www.gsri.team
+
+  author:
+    description: name of the mod author, used in mod.cpp
+    required: false
+    default: www.gsri.team
+
+  image:
+    description: image used to illustrate the mod, used in mod.cpp
+    required: true    
+
+runs:
+  using: composite
+  steps:
+
+  - name: Checkout files
+    uses: actions/checkout@v3
+
+  - name: Get new version
+    uses: arwynfr/actions-conventional-versioning/get-newVersion@0.3.1
+    id: new-version
+
+  - name: Build mod
+    shell: pwsh
+    id: build-mod
+    run: |
+      $ActionArgs = @{
+        Source    = Join-Path -Path ${env:GITHUB_WORKSPACE} -ChildPath '${{ inputs.source }}'
+        Target    = '${{ runner.temp }}'
+        Name      = '${{ input.name }}'
+        Product   = '${{ input.product }}'
+        Version   = '${{ steps.new-version.outputs.next-version }}'
+        Url       = '${{ input.url }}'
+        Author    = '${{ input.author }}'
+        Image     = Join-Path -Path ${env:GITHUB_WORKSPACE} -ChildPath '${{ input.image }}'
+      }
+      ${{ github.action_path }}/functions/Build-Mod.ps1 @ActionArgs
+
+  - name: Create Github release
+    uses: arwynfr/actions-conventional-versioning@0.3.1
+    with:
+      pattern: '${{ runner.temp }}/*.zip'
+
+  - name: Publish on Workshop
+    shell: pwsh
+    run: |
+      $ActionArgs = @{
+        ItemId  = ${{ input.workshopId }}
+        Content = '${{ runner.temp }}/${{ input.name }}'
+      }
+      ${{ github.action_path }}/functions/Publish-Mod.ps1 @ActionArgs
+    env:
+      STEAM_LOGIN: ${{ secrets.STEAM_LOGIN }}
+      STEAM_PASSWD: ${{ secrets.STEAM_PASSWD }}
+

@@ -1,0 +1,40 @@
+name: Arma 3 release mission
+description: Create a new release of a mission repository, using arma 3 tools and conventional versioning.
+inputs:
+
+  missionName:
+    description: Name of the mission
+    required: true
+
+  source:
+    description: Path to the mission source directory, relative to repository root
+    required: true
+
+runs:
+  using: composite
+  steps:
+
+    - name: Checkout files
+      uses: actions/checkout@v3
+      
+    - name: Get new version
+      id: new-version
+      uses: arwynfr/actions-conventional-versioning/get-newVersion@0.3.1
+          
+    - name: Make mission pbo
+      uses: team-gsri/actions-arma-tools/build-mission@0.0.1
+      with:
+        briefingName: '${{ input.missionName }} ${{ steps.new-version.outputs.next-version }}'
+        source: ${{ input.source }}
+        target: ./
+
+    - name: Upload PBO to github
+      uses: actions/upload-artifact@v3
+      with:
+        name: mission
+        path: ./*.pbo
+
+    - name: Create Github Release
+      uses: arwynfr/actions-conventional-versioning@0.3.1
+      with:
+          pattern: $(Convert-Path *.pbo)

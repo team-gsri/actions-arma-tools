@@ -1,0 +1,45 @@
+= GSRI GitHub Actions: Arma 3 tools
+
+This repository contains all out GitHub Actions related to Arma 3 Tools for our continuous integration process.
+
+CAUTION: **These actions can only be used on Windows runners** and requires installation of the Arma 3 Tools. This requires you to agree to the Steam EULA, Arma 3 EULA, and BI Tools EULA. You can install the arma 3 tools using steamcmd.
+
+== Content
+
+The following actions are available in this repository:
+
+[cols="1,3"]
+|===
+| Action | Description
+
+| link:./build-addon/[build-addon]
+| Compiles an addon into a binarized pbo using AddonBuilder
+
+| link:./build-mission/[build-mission]
+| Compiles a mission into a binarized pbo using Arma 3 Tools
+
+| link:./release-mod/[release-mod]
+| Publish a mod on GitHub release and on the Steam workshop
+
+| link:./release-mission/[release-mission]
+| Creates a GitHub release for a mission, and uploads the pbo
+
+|===
+
+== Rules and standards
+
+The following documents provide additional informations on rules and standards applying to this project :
+
+* link:LICENSE[MIT License]
+* https://www.bohemia.net/community/licenses/bohemia-interactives-tools-end-user-license[BI Tools EULA]
+* https://www.bohemia.net/community/licenses/arma3-end-user-license[BI Arma 3 EULA]
+* https://github.com/team-gsri/.github/blob/master/CODE_OF_CONDUCT.md[GSRI Code of conduct]
+* https://github.com/team-gsri/.github/blob/master/SECURITY.md[GSRI Security policy]
+* https://github.com/team-gsri/.github/blob/master/SUPPORT.md[GSRI Support policy]
+* https://github.com/team-gsri/.github/blob/master/CONTRIBUTING.md[GSRI Contribution guide]
+
+== Disclaimer
+
+This application or website is not affiliated or authorized by Bohemia Interactive a.s. Bohemia Interactive, ARMA, DAYZ and all associated logos and designs are trademarks or registered trademarks of Bohemia Interactive a.s.
+
+The GSRI logo is a trademark of GSRI.

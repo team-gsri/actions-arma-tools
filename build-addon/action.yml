@@ -1,0 +1,34 @@
+name: 'Arma 3 build addon'
+description: 'Compile an arma 3 addon source directory into a binarized PBO file, using Arma 3 Tools'
+inputs:
+
+  source:
+    description: 'Path to the addon source directory'
+    required: true
+
+  target:
+    description: 'Path to the directory where the action will output the pbo file'
+    required: true
+
+  prefix:
+    description: 'Prefix for the pbo file properties'
+    required: true
+  
+  includes:
+    description: 'Pattern for files to include or not in the pbo'
+    required: false
+    default: '*.paa;*.png;*.jpg;*.xml;*.sqf;*.rtm;*.fsm;*.sqm;*.lip;*.ext;*.ogg;*.wss;*.txt'
+
+runs:
+  using: composite
+  steps:
+
+    - shell: pwsh
+      run: |
+        $ActionArgs = @{
+          Source = Join-Path -Path ${env:GITHUB_WORKSPACE} -ChildPath '${{ inputs.source }}'
+          Target = Join-Path -Path ${env:GITHUB_WORKSPACE} -ChildPath '${{ inputs.target }}'
+          Includes = '${{ inputs.includes }}'
+          Prefix = '${{ inputs.prefix }}'
+        }
+        ${{ github.action_path }}/functions/Build-AddonPbo.ps1 @ActionArgs
