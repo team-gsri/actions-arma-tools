@@ -50,12 +50,12 @@ runs:
       $ActionArgs = @{
         Source    = Join-Path -Path ${env:GITHUB_WORKSPACE} -ChildPath '${{ inputs.source }}'
         Target    = '${{ runner.temp }}'
-        Name      = '${{ input.name }}'
-        Product   = '${{ input.product }}'
+        Name      = '${{ inputs.name }}'
+        Product   = '${{ inputs.product }}'
         Version   = '${{ steps.new-version.outputs.next-version }}'
-        Url       = '${{ input.url }}'
-        Author    = '${{ input.author }}'
-        Image     = Join-Path -Path ${env:GITHUB_WORKSPACE} -ChildPath '${{ input.image }}'
+        Url       = '${{ inputs.url }}'
+        Author    = '${{ inputs.author }}'
+        Image     = Join-Path -Path ${env:GITHUB_WORKSPACE} -ChildPath '${{ inputs.image }}'
       }
       ${{ github.action_path }}/functions/Build-Mod.ps1 @ActionArgs
 
@@ -73,6 +73,6 @@ runs:
       }
       ${{ github.action_path }}/functions/Publish-Mod.ps1 @ActionArgs
     env:
-      STEAM_LOGIN: ${{ secrets.STEAM_LOGIN }}
-      STEAM_PASSWD: ${{ secrets.STEAM_PASSWD }}
+      STEAM_LOGIN: ${{ secret.STEAM_LOGIN }}
+      STEAM_PASSWD: ${{ secret.STEAM_PASSWD }}
 
