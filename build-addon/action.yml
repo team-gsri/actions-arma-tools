@@ -31,4 +31,4 @@ runs:
           Includes = '${{ inputs.includes }}'
           Prefix = '${{ inputs.prefix }}'
         }
-        ${{ github.action_path }}/functions/Build-AddonPbo.ps1 @ActionArgs
+        ${{ github.action_path }}/../functions/Build-AddonPbo.ps1 @ActionArgs
