@@ -73,6 +73,6 @@ runs:
       }
       ${{ github.action_path }}/functions/Publish-Mod.ps1 @ActionArgs
     env:
-      STEAM_LOGIN: ${{ secrets.STEAM_LOGIN }}
-      STEAM_PASSWD: ${{ secrets.STEAM_PASSWD }}
+      STEAM_LOGIN: '${{ secrets.STEAM_LOGIN }}'
+      STEAM_PASSWD: '${{ secrets.STEAM_PASSWD }}'
 
