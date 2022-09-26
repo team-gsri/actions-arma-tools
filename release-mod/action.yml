@@ -68,7 +68,7 @@ runs:
   - name: Create Github release
     uses: arwynfr/actions-conventional-versioning@0.3.3
     with:
-      pattern: '${{ runner.temp }}/*.zip'
+      pattern: $(Convert-Path ${{ runner.temp }}/*.zip)
 
   - name: Publish on Workshop
     shell: pwsh
