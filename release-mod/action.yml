@@ -63,7 +63,7 @@ runs:
         Author    = '${{ inputs.author }}'
         Image     = Join-Path -Path ${env:GITHUB_WORKSPACE} -ChildPath '${{ inputs.image }}'
       }
-      ${{ github.action_path }}/functions/Build-Mod.ps1 @ActionArgs
+      ${{ github.action_path }}/../functions/Build-Mod.ps1 @ActionArgs
 
   - name: Create Github release
     uses: arwynfr/actions-conventional-versioning@0.3.1
@@ -77,7 +77,7 @@ runs:
         ItemId  = ${{ inputs.workshopId }}
         Content = '${{ runner.temp }}/${{ inputs.name }}'
       }
-      ${{ github.action_path }}/functions/Publish-Mod.ps1 @ActionArgs
+      ${{ github.action_path }}/../functions/Publish-Mod.ps1 @ActionArgs
     env:
       STEAM_LOGIN: '${{ inputs.steam_login }}'
       STEAM_PASSWD: '${{ inputs.steam_password }}'
