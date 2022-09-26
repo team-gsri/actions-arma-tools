@@ -46,7 +46,7 @@ runs:
     uses: actions/checkout@v3
 
   - name: Get new version
-    uses: arwynfr/actions-conventional-versioning/get-newVersion@0.3.2
+    uses: arwynfr/actions-conventional-versioning/get-newVersion@0.3.3
     id: new-version
 
   - name: Build mod
@@ -66,7 +66,7 @@ runs:
       ${{ github.action_path }}/../functions/Build-Mod.ps1 @ActionArgs
 
   - name: Create Github release
-    uses: arwynfr/actions-conventional-versioning@0.3.2
+    uses: arwynfr/actions-conventional-versioning@0.3.3
     with:
       pattern: '${{ runner.temp }}/*.zip'
 
