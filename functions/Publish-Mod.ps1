@@ -5,7 +5,8 @@ param (
     $AppId = 107410,
 
     [Parameter(Mandatory)]
-    [int]
+    [ValidatePattern('[0-9]+')]
+    [string]
     $ItemId,
 
     [Parameter(Mandatory)]
