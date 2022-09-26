@@ -30,7 +30,13 @@ inputs:
 
   image:
     description: image used to illustrate the mod, used in mod.cpp
-    required: true    
+    required: true
+    
+  steam_login:
+    required: true
+  
+  steam_password:
+    required: true
 
 runs:
   using: composite
@@ -73,6 +79,6 @@ runs:
       }
       ${{ github.action_path }}/functions/Publish-Mod.ps1 @ActionArgs
     env:
-      STEAM_LOGIN: '${{ secrets.STEAM_LOGIN }}'
-      STEAM_PASSWD: '${{ secrets.STEAM_PASSWD }}'
+      STEAM_LOGIN: '${{ inputs.steam_login }}'
+      STEAM_PASSWD: '${{ inputs.steam_password }}'
 
