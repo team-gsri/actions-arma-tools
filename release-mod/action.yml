@@ -68,11 +68,11 @@ runs:
     shell: pwsh
     run: |
       $ActionArgs = @{
-        ItemId  = ${{ input.workshopId }}
+        ItemId  = ${{ inputs.workshopId }}
         Content = '${{ runner.temp }}/${{ input.name }}'
       }
       ${{ github.action_path }}/functions/Publish-Mod.ps1 @ActionArgs
     env:
-      STEAM_LOGIN: ${{ secret.STEAM_LOGIN }}
-      STEAM_PASSWD: ${{ secret.STEAM_PASSWD }}
+      STEAM_LOGIN: ${{ secrets.STEAM_LOGIN }}
+      STEAM_PASSWD: ${{ secrets.STEAM_PASSWD }}
 
