@@ -17,13 +17,13 @@ Process {
             return "[*]$($Node.childNodes | & $PSScriptRoot/ConvertTo-SteamText.ps1)"
         }
         "P" {
-            -Join ($Node.childNodes | & $PSScriptRoot/ConvertTo-SteamText.ps1)
+            return -Join ($Node.childNodes | & $PSScriptRoot/ConvertTo-SteamText.ps1)
         }
         "STRONG" {
-            "[b]$($Node.childNodes | & $PSScriptRoot/ConvertTo-SteamText.ps1)[/b]"
+            return "[b]$($Node.childNodes | & $PSScriptRoot/ConvertTo-SteamText.ps1)[/b]"
         }
         "A" {
-            "[url=$($Node.href)]$($Node.childNodes | & $PSScriptRoot/ConvertTo-SteamText.ps1)[/url]"
+            return "[url=$($Node.href)]$($Node.childNodes | & $PSScriptRoot/ConvertTo-SteamText.ps1)[/url]"
         }
         "#text" {
             return $Node.textContent -Replace ('"', '&quot;')
