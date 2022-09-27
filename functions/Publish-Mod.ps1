@@ -43,6 +43,7 @@ Process {
     "publishedfileid"  "$ItemId"
     "contentfolder"    "$Content"
     "changenote"       "$changenote"
+    "visibility"       "0"
 }
 "@ | Set-Content $workshopItemFile
     & $SteamCmd +login $env:STEAM_LOGIN $env:STEAM_PASSWD +workshop_build_item $workshopItemFile +quit
