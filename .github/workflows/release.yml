@@ -1,0 +1,16 @@
+name: release
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [master]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    name: 'Publish a new release'
+    steps:
+
+    - uses: arwynfr/actions-conventional-versioning@0.3.3
+      with:
+        pattern: ''
