@@ -35,7 +35,8 @@ Begin {
     }
 
     $workshopItemFile = New-TemporaryFile
-    $changenote = $(gh release view --json body -q .body) -Replace ('"', '')
+    $changenote = $(gh release view --json body -q .body)
+    $changenote = & $PSScriptRoot/Convert-MarkdownToSteamText -Content $changenote
     $Title = $Title -Replace ('"', '')
 }
 
