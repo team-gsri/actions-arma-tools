@@ -10,6 +10,10 @@ param (
     $ItemId,
 
     [Parameter(Mandatory)]
+    [string]
+    $Title,
+
+    [Parameter(Mandatory)]
     [ValidateScript({ if (Test-Path $_ -PathType Container) { $true } else { Throw '-Content must ba a valid directory' } })]
     [string]
     $Content,
@@ -32,6 +36,7 @@ Begin {
 
     $workshopItemFile = New-TemporaryFile
     $changenote = $(gh release view --json body -q .body) -Replace ('"', '')
+    $Title = $Title -Replace ('"', '')
 }
 
 Process {
@@ -43,7 +48,7 @@ Process {
     "publishedfileid"  "$ItemId"
     "contentfolder"    "$Content"
     "changenote"       "$changenote"
-    "visibility"       "0"
+    "title"            "$title"
 }
 "@ | Set-Content $workshopItemFile
     & $SteamCmd +login $env:STEAM_LOGIN $env:STEAM_PASSWD +workshop_build_item $workshopItemFile +quit
