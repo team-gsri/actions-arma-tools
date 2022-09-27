@@ -26,4 +26,4 @@ runs:
           Target = Join-Path -Path ${env:GITHUB_WORKSPACE} -ChildPath '${{ inputs.target }}'
           BriefingName = "${{ inputs.briefingName }}"
         }
-        ${{ github.action_path }}/functions/Build-MissionPbo.ps1 @ActionArgs
+        ${{ github.action_path }}/../functions/Build-MissionPbo.ps1 @ActionArgs

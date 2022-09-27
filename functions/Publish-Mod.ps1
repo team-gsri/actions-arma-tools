@@ -5,8 +5,13 @@ param (
     $AppId = 107410,
 
     [Parameter(Mandatory)]
-    [int]
+    [ValidatePattern('[0-9]+')]
+    [string]
     $ItemId,
+
+    [Parameter(Mandatory)]
+    [string]
+    $Title,
 
     [Parameter(Mandatory)]
     [ValidateScript({ if (Test-Path $_ -PathType Container) { $true } else { Throw '-Content must ba a valid directory' } })]
@@ -30,7 +35,9 @@ Begin {
     }
 
     $workshopItemFile = New-TemporaryFile
-    $changenote = $(gh release view --json body -q .body) -Replace ('"', '')
+    $changenote = $(gh release view --json body -q .body)
+    $changenote = & $PSScriptRoot/Convert-MarkdownToSteamText -Content $changenote
+    $Title = $Title -Replace ('"', '')
 }
 
 Process {
@@ -42,6 +49,7 @@ Process {
     "publishedfileid"  "$ItemId"
     "contentfolder"    "$Content"
     "changenote"       "$changenote"
+    "title"            "$title"
 }
 "@ | Set-Content $workshopItemFile
     & $SteamCmd +login $env:STEAM_LOGIN $env:STEAM_PASSWD +workshop_build_item $workshopItemFile +quit

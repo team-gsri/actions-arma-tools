@@ -3,11 +3,11 @@ description: Create and publish a new release of a mod ; allows multiple addons 
 inputs:
 
   name:
-    description: short name of the mod, used as file/directory identifier
+    description: short name of the mod, used as mod directory name and BI key authority
     required: true
 
   product:
-    description: long description of the mod that goes in the mod.cpp
+    description: long description of the mod that goes in the mod.cpp and on the workshop
     required: true
 
   source:
@@ -30,7 +30,13 @@ inputs:
 
   image:
     description: image used to illustrate the mod, used in mod.cpp
-    required: true    
+    required: true
+    
+  steam_login:
+    required: true
+  
+  steam_password:
+    required: true
 
 runs:
   using: composite
@@ -40,7 +46,7 @@ runs:
     uses: actions/checkout@v3
 
   - name: Get new version
-    uses: arwynfr/actions-conventional-versioning/get-newVersion@0.3.1
+    uses: arwynfr/actions-conventional-versioning/get-newVersion@0.3.3
     id: new-version
 
   - name: Build mod
@@ -50,29 +56,30 @@ runs:
       $ActionArgs = @{
         Source    = Join-Path -Path ${env:GITHUB_WORKSPACE} -ChildPath '${{ inputs.source }}'
         Target    = '${{ runner.temp }}'
-        Name      = '${{ input.name }}'
-        Product   = '${{ input.product }}'
+        Name      = '${{ inputs.name }}'
+        Product   = '${{ inputs.product }}'
         Version   = '${{ steps.new-version.outputs.next-version }}'
-        Url       = '${{ input.url }}'
-        Author    = '${{ input.author }}'
-        Image     = Join-Path -Path ${env:GITHUB_WORKSPACE} -ChildPath '${{ input.image }}'
+        Url       = '${{ inputs.url }}'
+        Author    = '${{ inputs.author }}'
+        Image     = Join-Path -Path ${env:GITHUB_WORKSPACE} -ChildPath '${{ inputs.image }}'
       }
-      ${{ github.action_path }}/functions/Build-Mod.ps1 @ActionArgs
+      ${{ github.action_path }}/../functions/Build-Mod.ps1 @ActionArgs
 
   - name: Create Github release
-    uses: arwynfr/actions-conventional-versioning@0.3.1
+    uses: arwynfr/actions-conventional-versioning@0.3.3
     with:
-      pattern: '${{ runner.temp }}/*.zip'
+      pattern: $(Convert-Path ${{ runner.temp }}/*.zip)
 
   - name: Publish on Workshop
     shell: pwsh
     run: |
       $ActionArgs = @{
-        ItemId  = ${{ input.workshopId }}
-        Content = '${{ runner.temp }}/${{ input.name }}'
+        ItemId  = ${{ inputs.workshopId }}
+        Content = '${{ runner.temp }}/${{ inputs.name }}'
+        Title   = '${{ inputs.product }} ${{ steps.new-version.outputs.next-version }}'
       }
-      ${{ github.action_path }}/functions/Publish-Mod.ps1 @ActionArgs
+      ${{ github.action_path }}/../functions/Publish-Mod.ps1 @ActionArgs
     env:
-      STEAM_LOGIN: ${{ secrets.STEAM_LOGIN }}
-      STEAM_PASSWD: ${{ secrets.STEAM_PASSWD }}
+      STEAM_LOGIN: '${{ inputs.steam_login }}'
+      STEAM_PASSWD: '${{ inputs.steam_password }}'
 
