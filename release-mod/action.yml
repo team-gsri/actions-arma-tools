@@ -3,11 +3,11 @@ description: Create and publish a new release of a mod ; allows multiple addons 
 inputs:
 
   name:
-    description: short name of the mod, used as file/directory identifier
+    description: short name of the mod, used as mod directory name and BI key authority
     required: true
 
   product:
-    description: long description of the mod that goes in the mod.cpp
+    description: long description of the mod that goes in the mod.cpp and on the workshop
     required: true
 
   source:
@@ -76,6 +76,7 @@ runs:
       $ActionArgs = @{
         ItemId  = ${{ inputs.workshopId }}
         Content = '${{ runner.temp }}/${{ inputs.name }}'
+        Title   = '${{ inputs.product }} ${{ steps.new-version.outputs.next-version }}'
       }
       ${{ github.action_path }}/../functions/Publish-Mod.ps1 @ActionArgs
     env:
