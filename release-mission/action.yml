@@ -24,8 +24,8 @@ runs:
     - name: Make mission pbo
       uses: team-gsri/actions-arma-tools/build-mission@0.0.1
       with:
-        briefingName: '${{ input.missionName }} ${{ steps.new-version.outputs.next-version }}'
-        source: ${{ input.source }}
+        briefingName: '${{ inputs.missionName }} ${{ steps.new-version.outputs.next-version }}'
+        source: ${{ inputs.source }}
         target: ./
 
     - name: Upload PBO to github
