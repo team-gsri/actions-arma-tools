@@ -52,7 +52,7 @@ Process {
     "title"            "$title"
 }
 "@ | Set-Content $workshopItemFile
-    & $SteamCmd +login $env:STEAM_LOGIN $env:STEAM_PASSWD +workshop_build_item $workshopItemFile +quit
+    & $SteamCmd +login $env:STEAM_LOGIN $env:STEAM_PASSWD $(& $env:STEAMGUARD) +workshop_build_item $workshopItemFile +quit
 }
 
 End {
