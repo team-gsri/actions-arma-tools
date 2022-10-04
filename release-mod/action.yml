@@ -42,9 +42,6 @@ runs:
   using: composite
   steps:
 
-  - name: Checkout files
-    uses: actions/checkout@v3
-
   - name: Get new version
     uses: arwynfr/actions-conventional-versioning/get-newVersion@0.3.3
     id: new-version
