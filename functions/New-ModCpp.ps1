@@ -19,6 +19,7 @@ param (
     $Author = 'www.gsri.team',
 
     [Parameter()]
+    [ValidateScript({ if (Test-Path $_ -PathType Leaf) { $true } else { Throw '-Image must ba a valid file' } })]
     [string]
     $Image
 )
@@ -37,11 +38,12 @@ author = "${Author}";
 "@ | Set-Content $filename
 
     if ($Image -ne '') {
+        $ImagePath = Split-Path $Image -Leaf
         @"
-picture = "${Image}";
-logo = "${Image}";
-logoOver = "${Image}";
-overviewPicture = "${Image}";
+picture = "${ImagePath}";
+logo = "${ImagePath}";
+logoOver = "${ImagePath}";
+overviewPicture = "${ImagePath}";
 "@ | Add-Content $filename
     }
 
