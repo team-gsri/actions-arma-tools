@@ -33,9 +33,11 @@ inputs:
     required: true
     
   steam_login:
+    description: login for steam account which will publish the mod
     required: true
   
   steam_password:
+    description: password for steam account which will publish the mod
     required: true
 
 runs:
@@ -73,7 +75,7 @@ runs:
       $ActionArgs = @{
         ItemId  = ${{ inputs.workshopId }}
         Content = '${{ runner.temp }}/${{ inputs.name }}'
-        Title   = '${{ inputs.product }} ${{ steps.new-version.outputs.next-version }}'
+        Title   = '${{ inputs.product }}'
       }
       ${{ github.action_path }}/../functions/Publish-Mod.ps1 @ActionArgs
     env:
