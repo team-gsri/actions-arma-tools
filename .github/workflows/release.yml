@@ -8,9 +8,10 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
-    name: 'Publish a new release'
+    name: Publish a new release
     steps:
+      - name: Create GitHub release
+        uses: arwynfr/actions-conventional-versioning@v0.4
 
-    - uses: arwynfr/actions-conventional-versioning@0.3.3
-      with:
-        pattern: ''
+      - name: Create version tags
+        uses: arwynfr/actions-conventional-versioning/new-versionTags@v0.4
