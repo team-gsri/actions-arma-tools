@@ -16,7 +16,7 @@ param (
 
     [Parameter(Mandatory)]
     [string]
-    $Includes,
+    $Includes = '*.paa;*.png;*.jpg;*.xml;*.sqf;*.rtm;*.fsm;*.sqm;*.lip;*.ext;*.ogg;*.wss;*.txt',
 
     [Parameter()]
     [ValidateScript({ Test-Path $_ -PathType Container || Throw '-ArmaToolsPath must be a directory' })]
