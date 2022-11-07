@@ -17,7 +17,7 @@ inputs:
   includes:
     description: 'Pattern for files to include or not in the pbo'
     required: false
-    default: '*.paa;*.png;*.jpg;*.xml;*.sqf;*.rtm;*.fsm;*.sqm;*.lip;*.ext;*.ogg;*.wss;*.txt'
+    default: '*.paa;*.png;*.jpg;*.xml;*.sqf;*.rtm;*.fsm;*.sqm;*.lip;*.ext;*.ogg;*.wss;*.txt;*.rvmat'
 
 runs:
   using: composite
