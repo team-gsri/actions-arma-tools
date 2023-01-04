@@ -19,10 +19,10 @@ runs:
       
     - name: Get new version
       id: new-version
-      uses: arwynfr/actions-conventional-versioning/get-newVersion@0.3.3
+      uses: arwynfr/actions-conventional-versioning/get-newVersion@v1
           
     - name: Make mission pbo
-      uses: team-gsri/actions-arma-tools/build-mission@0.0.1
+      uses: team-gsri/actions-arma-tools/build-mission@v0
       with:
         briefingName: '${{ inputs.missionName }} ${{ steps.new-version.outputs.next-version }}'
         source: ${{ inputs.source }}
@@ -35,6 +35,6 @@ runs:
         path: ./*.pbo
 
     - name: Create Github Release
-      uses: arwynfr/actions-conventional-versioning@0.3.3
+      uses: arwynfr/actions-conventional-versioning@v1
       with:
-          pattern: $(Convert-Path *.pbo)
+          pattern: ./*.pbo

@@ -31,11 +31,11 @@ inputs:
   image:
     description: image used to illustrate the mod, used in mod.cpp
     required: true
-    
+
   steam_login:
     description: login for steam account which will publish the mod
     required: true
-  
+
   steam_password:
     description: password for steam account which will publish the mod
     required: true
@@ -45,7 +45,7 @@ runs:
   steps:
 
   - name: Get new version
-    uses: arwynfr/actions-conventional-versioning/get-newVersion@0.3.3
+    uses: arwynfr/actions-conventional-versioning/get-newVersion@v1
     id: new-version
 
   - name: Build mod
@@ -65,9 +65,9 @@ runs:
       ${{ github.action_path }}/../functions/Build-Mod.ps1 @ActionArgs
 
   - name: Create Github release
-    uses: arwynfr/actions-conventional-versioning@0.3.3
+    uses: arwynfr/actions-conventional-versioning@v1
     with:
-      pattern: $(Convert-Path ${{ runner.temp }}/*.zip)
+      pattern: ${{ runner.temp }}/*.zip
 
   - name: Publish on Workshop
     shell: pwsh
@@ -81,4 +81,3 @@ runs:
     env:
       STEAM_LOGIN: '${{ inputs.steam_login }}'
       STEAM_PASSWD: '${{ inputs.steam_password }}'
-
