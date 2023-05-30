@@ -11,7 +11,11 @@ jobs:
     name: Publish a new release
     steps:
       - name: Create GitHub release
-        uses: arwynfr/actions-conventional-versioning@v1.0
+        uses: arwynfr/actions-conventional-versioning@v3
+        with:
+          allow-additional-modifiers: true
+          feat-upgrades-minor: false
+          strict-types: true
 
       - name: Create version tags
-        uses: arwynfr/actions-conventional-versioning/new-versionTags@v1.0
+        uses: arwynfr/actions-conventional-versioning/new-versionTags@v3
