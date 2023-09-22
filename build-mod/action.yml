@@ -1,0 +1,52 @@
+name: Arma 3 build mod
+description: Create a mod from a collection of existing pbos
+inputs:
+
+  source:
+    description: path to the pbo files, relative to repository root, recursive
+    required: true
+
+  name:
+    description: short name of the mod, used as mod directory name and BI key authority
+    required: true
+
+  product:
+    description: long description of the mod that goes in the mod.cpp and on the workshop
+    required: true
+  
+  version:
+    description: version of the product, advertised in the mod.cpp and in the BI key name
+    required: true
+
+  url:
+    description: URL to author website, used in mod.cpp
+    required: false
+    default: https://www.gsri.team
+
+  author:
+    description: name of the mod author, used in mod.cpp
+    required: false
+    default: www.gsri.team
+
+  image:
+    description: image used to illustrate the mod, used in mod.cpp
+    required: true
+
+runs:
+  using: composite
+  steps:
+
+  - name: Build mod
+    shell: pwsh
+    id: build-mod
+    run: |
+      $ActionArgs = @{
+        Source    = Join-Path -Path ${env:GITHUB_WORKSPACE} -ChildPath '${{ inputs.source }}'
+        Name      = '${{ inputs.name }}'
+        Product   = '${{ inputs.product }}'
+        Version   = '${{ inputs.version }}'
+        Url       = '${{ inputs.url }}'
+        Author    = '${{ inputs.author }}'
+        Image     = Join-Path -Path ${env:GITHUB_WORKSPACE} -ChildPath '${{ inputs.image }}'
+      }
+      ${{ github.action_path }}/Build-Mod.ps1 @ActionArgs

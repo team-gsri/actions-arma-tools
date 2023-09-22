@@ -1,0 +1,41 @@
+name: Arma 3 public mod on Steam Workshop
+description: Publish an Arma 3 mod on the Steam Workshop
+inputs:
+
+  applicationId:
+    description: identifier of the Steam application for the workshop item ; defaults to Arma 3
+    required: false
+    default: 107410
+
+  product:
+    description: long description of the mod that goes in the mod.cpp and on the workshop
+    required: true
+
+  content:
+    description: path to the content to publish
+    required: true
+
+  workshopId:
+    description: identifier of the Steam workshop item to update
+    required: true
+
+  steam_login:
+    description: login for steam account which will publish the mod
+    required: true
+
+runs:
+  using: composite
+  steps:
+
+  - name: Publish on Workshop
+    shell: pwsh
+    run: |
+      $ActionArgs = @{
+        AppId       = ${{ inputs.applicationId }}
+        ItemId      = ${{ inputs.workshopId }}
+        Title       = '${{ inputs.product }}'
+        ContentPath = '${{ inputs.content }}'
+      }
+      ${{ github.action_path }}/Publish-Mod.ps1 @ActionArgs
+    env:
+      STEAM_LOGIN: '${{ inputs.steam_login }}'

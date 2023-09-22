@@ -1,17 +1,17 @@
-name: 'Arma 3 build mission'
-description: 'Compile an arma 3 source mission directory into a binarized PBO file, using Arma 3 Tools'
+name: Arma 3 build mission'
+description: Compile an arma 3 source mission directory into a binarized PBO file, using Arma 3 Tools
 inputs:
 
   source:
-    description: 'Path to the directory containing the mission.sqm file'
+    description: Path to the directory containing the mission.sqm file
     required: true
 
   target:
-    description: 'Path to the directory where the action will output the pbo file'
+    description: Path to the directory where the action will output the pbo file
     required: true
 
   briefingName:
-    description: 'If not empty, will overwrite the mission briefingName before building the pbo'
+    description: If not empty, will overwrite the mission briefingName before building the pbo
     required: false
     default: ''
 
@@ -26,4 +26,4 @@ runs:
           Target = Join-Path -Path ${env:GITHUB_WORKSPACE} -ChildPath '${{ inputs.target }}'
           BriefingName = "${{ inputs.briefingName }}"
         }
-        ${{ github.action_path }}/../functions/Build-MissionPbo.ps1 @ActionArgs
+        ${{ github.action_path }}/Build-MissionPbo.ps1 @ActionArgs
